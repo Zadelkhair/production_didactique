@@ -1,7 +1,7 @@
 
 # Production didactique
 
-real time interactivity web based application developed by 3 IT teacher ( abdelkodous zadelkhair, brahim ait elfilali , abdessamad eshaik  ) to improve the teaching methods.
+Real time interactivity web based application developed by 3 IT teacher ( abdelkodous zadelkhair, brahim ait elfilali , abdessamad eshaik  ) to improve the teaching methods.
 
 
 
@@ -19,7 +19,7 @@ To install the application you need as prerequisites :
 - nodejs v14.16.0
 - mysql database
 
-After that create a database with name of evaluation_proj and import the 'evaluation_proj.sql' file
+After that create a database with the name of evaluation_proj and import the 'evaluation_proj.sql' file
 
 After that run :
 
