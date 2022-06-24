@@ -34,8 +34,8 @@ After that run :
 
 ## How to use
 
-to login as an admin you should visit the /login page
+to login as a Teacher you should visit the /login page
 - password : 123abc
-
+to login as a student you should visit the /connect page. register first & then login.
 
 
