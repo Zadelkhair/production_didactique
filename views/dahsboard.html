@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    #list-evaluation {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #list-evaluation .evaluation-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 7px;
+      border: 1px solid rgb(220, 220, 220);
+      border-radius: 5px;
+      box-shadow: 0 0 20px 0 #00000014;
+      margin-bottom: 7px;
+      padding: 7px;
+      transition: ease 1s;
+    }
+
+    #list-evaluation .evaluation-container:hover {
+      box-shadow: 0 0 20px 0 #0000004d;
+      transition: ease 1s;
+      cursor: pointer;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-item {
+      display: flex;
+      align-items: center;
+      padding: 7px;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-item .title {
+      margin-right: auto;
+      font-size: 14px;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-item .btn {
+      margin-left: 7px;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-parts {
+      margin-left: 24px;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-parts .part-item {
+      display: flex;
+      align-items: center;
+      padding: 7px;
+      border: 1px solid rgb(220, 220, 220);
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+
+    #list-evaluation .evaluation-container .evaluation-parts .part-item .title {
+      margin-right: auto;
+      font-size: 11px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card m-4">
+    <div class="card-body">
+
+      <h5 class="card-title">Evaluations :</h5>
+
+      <div id="list-evaluation">
+        <!-- <div class="evaluation-container">
+          <div class="evaluation-item">
+            <div class="title">evaluation1</div>
+            <button class="btn btn-sm btn-primary" type="button">copy</button>
+            <button class="btn btn-sm btn-secondary" type="button">edit</button>
+          </div>
+          <div class="evaluation-parts">
+            <div class="part-item">
+              <div class="title">part1</div>
+              <button class="btn btn-sm btn-secondary" type="button">edit</button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <!-- get all evaluatoins with there parts -->
+      <script>
+        let evaluationListElem = document.querySelector('#list-evaluation');
+
+        // get domain name 
+        let url = window.location.href;
+        let getDomain = url.substring(0, url.indexOf('/', 8));
+
+        axios.get('/api/evaluations')
+          .then(function (response) {
+            let evaluationInnerHtml = ``;
+            // handle success
+            response.data.forEach(evaluationObj => {
+
+              evaluationInnerHtml += `
+                <div class="evaluation-container">
+                  <div class="evaluation-item">
+                    <div class="title">evaluation ${evaluationObj.id} | ${evaluationObj.created_at.replace('T', ' ')}</div>
+                    <a class="btn btn-sm btn-primary" href="/evaluation?room=${evaluationObj.room}" type="button">start the evaluation</a>
+                    <button class="btn btn-sm btn-secondary" onclick="navigator.clipboard.writeText('${getDomain + '/room?r=' + evaluationObj.room}');alert('Copied url : ${getDomain + '/room?r=' + evaluationObj.room}');" type="button">copy room code</button>
+                    <button class="btn btn-sm btn-success" onclick="createNewPart(${evaluationObj.id})" type="button">add part</button>
+                  </div>
+                  <div class="evaluation-parts" id="evaluation-${evaluationObj.id}-parts">`;
+
+              evaluationObj.parts.forEach(part => {
+
+                evaluationInnerHtml += `
+                    <div class="part-item">
+                      <div class="title">${part.name}</div>
+                      <a class="btn btn-sm btn-secondary" href="/editor?id=${part.id}" type="button">edit</a>
+                      <a class="btn btn-sm btn-danger ml-2" href="#/delete?id=${part.id}" type="button">delete</a>
+                    </div>
+                `;
+
+              });
+
+              evaluationInnerHtml += `  
+                  </div>
+                </div>
+              `;
+
+            });
+
+            evaluationListElem.innerHTML = evaluationInnerHtml;
+
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+
+        function createNewPart(evaluationId) {
+          let newPartName = prompt('Enter the name of the new part');
+          if (newPartName) {
+            axios.post('/api/evaluationpart', {
+              name: newPartName,
+              evaluation_id: evaluationId
+            })
+              .then(function (response) {
+                // handle success
+                console.log(response);
+
+                let evaluationPartsElem = document.querySelector(`#evaluation-${evaluationId}-parts`);
+                evaluationPartsElem.innerHTML += `
+                  <div class="part-item">
+                    <div class="title">${newPartName}</div>
+                    <a class="btn btn-sm btn-secondary" href="/editor?id=${response.data.id}" type="button">edit</a>
+                    <a class="btn btn-sm btn-danger ml-2" href="#/delete?id=${response.data.id}" type="button">delete</a>
+                  </div>
+                `;
+
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              })
+          }
+        }
+      </script>
+
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+
+  <script>
+
+  </script>
+
+</body>
+
+</html>

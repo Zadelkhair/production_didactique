@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,400;1,100;1,400&display=swap');
+
+        #bg {
+            position: absolute;
+            background: linear-gradient(1deg, #70e2da, #e6fefb);
+            width: 100%;
+            height: 100%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #question {
+            color: white;
+            font-size: 50px;
+            text-align: center;
+            overflow: hidden;
+
+        }
+
+        #qcm-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            width: 700px;
+            box-shadow: 0px 10px 20px 0px #0000001c;
+            background-image: url(/static/qcm-bg-img.png);
+            background-size: 120px;
+            font-family: 'Josefin Sans', sans-serif !important;
+            overflow: hidden;
+            max-width: 90%;
+        }
+
+        #qcm-progress {
+            height: 10px;
+            display: flex;
+            background: #bcf1eb;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        #qcm-progress #qcm-progress-value {
+            background: #62c6cd;
+            width: 10%;
+            position: absolute;
+            left: 0;
+            height: 100%;
+            top: 0;
+            overflow: hidden;
+
+        }
+
+        #question {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c5f6e;
+            padding: 30px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #question-text {
+            margin-top: 20px;
+            font-size: 18px;
+            width: 400px;
+            overflow: hidden;
+
+        }
+
+        #btn-choice {
+            background: rgb(255, 42, 163);
+            border: solid 1px rgb(255, 42, 163);
+            box-shadow: 0 0 0 0 black;
+            color: white;
+            font-size: 20px;
+            border-radius: 10px;
+            padding: 4px;
+            width: 45%;
+            height: 45%;
+            overflow: hidden;
+
+        }
+
+        #choices-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 20px 70px 20px;
+            overflow: hidden;
+            width: auto;
+            opacity: 1;
+        }
+
+        .btn-choice {
+            width: 300px;
+            margin-bottom: 10px;
+            background: white;
+            border-style: none;
+            padding: 10px 20px;
+            color: #2c5f6e;
+            text-align: left;
+            font-weight: bold;
+            border-radius: 10px;
+            font-size: 13px;
+            overflow: hidden;
+            /* display: flex; */
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            align-items: center;
+        }
+
+        .btn-choice .btn-num {
+            height: 30px;
+            width: 30px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100%;
+            margin-right: 20px;
+            background: #e6fefb;
+            box-shadow: 0 0 7px 0px #00000014;
+            padding: 0;
+        }
+
+        .btn-choice:hover,
+        .btn-choice-selected {
+            background: #70e2da;
+            color: white;
+        }
+
+        .btn-choice:hover .btn-num,
+        .btn-choice-selected .btn-num {
+            background: #2c5f6e;
+        }
+
+        .separator {
+            height: 5px;
+            background: red;
+            background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255 255 255 / 58%) 50%, rgb(0 0 0 / 10%) 50%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        #vid1 {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 99;
+        }
+
+        #question-num {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            width: 100%;
+            /*height:100%;*/
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <div id="bg"></div>
+
+    <div id="qcm-container">
+        <div id="qcm-progress">
+            <div id="qcm-progress-value"></div>
+        </div>
+        <div id="question">
+            <div id="question-num"> Question 2/14</div>
+            <div id="question-text">
+                Question 2/14
+                <br><br>
+                What algorithm do we use when we're building a wardrobe?
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div id="choices-container">
+            <button id="btn-choice-1" class="btn-choice">
+                <span class="btn-num">A</span>A set of directions
+            </button>
+            <button id="btn-choice-2" class="btn-choice">
+                <span class="btn-num">B</span>A recipe
+            </button>
+            <button id="btn-choice-3" class="btn-choice">
+                <span class="btn-num">C</span>A list of instructions
+            </button>
+        </div>
+    </div>
+    <video class="d-none" id="vid1"></video>
+    <video class="d-none" id="vid2"></video>
+    <video class="d-none" id="vid3"></video>
+    <video class="d-none" id="vid4"></video>
+    <video class="d-none" id="vid5"></video>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
