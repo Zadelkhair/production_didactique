@@ -1,7 +1,7 @@
 
 # Production didactique
 
-Real time interactivity web based application developed by 3 IT teacher ( abdelkodous zadelkhair, brahim ait elfilali , abdessamad eshaik  ) to improve the teaching methods.
+Real time interactivity web based application developed by 3 IT teachers ( abdelkodous zadelkhair, brahim ait elfilali , abdessamad eshaik  ) to improve the teaching methods.
 
 
 
