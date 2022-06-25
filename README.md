@@ -21,7 +21,7 @@ To install the application you need as prerequisites :
 
 After that create a database with the name of evaluation_proj and import the 'evaluation_proj.sql' file
 
-After that run :
+And then run :
 
 ```bash
   npm i
@@ -31,11 +31,24 @@ After that run :
   node index.js
 ```
 
+the application will start on port 3000
+
+```bash
+  127.0.0.1:3000
+```
+
 
 ## How to use
 
 to login as a Teacher you should visit the /login page
 - password : 123abc
 to login as a student you should visit the /connect page. register first & then login.
+
+NOTE : If you ( you and your students ) are in the same LAN network you can share with them you IP address, you can find your ip address on windows by running this command :
+
+```bash
+  ipconfig
+```
+
 
 
