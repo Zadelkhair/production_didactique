@@ -45,7 +45,8 @@ To login as a Teacher you should visit the /login page
 
 To login as a student you should visit the /connect page. register first & then login.
 
-NOTE : If you ( you and your students ) are in the same LAN network you can share with them you IP address, you can find your ip address on windows by running this command :
+NOTE : If you ( you and your students ) are in the same LAN network you can share with them your IP address. 
+You can find your ip address on windows by running this command :
 
 ```bash
   ipconfig
